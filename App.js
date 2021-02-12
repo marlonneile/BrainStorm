@@ -17,13 +17,21 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
+  Alert,
 } from 'react-native';
 
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 const App: () => React$Node = () => {
+
+  handleSaveNote = () => {
+    Alert.alert("TODO", "Salvar nota")
+  }
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -34,10 +42,14 @@ const App: () => React$Node = () => {
           style={styles.scrollView}>
           <View
             style={styles.sectionContainer}>
-            <TextInput
-              style={styles.textTitle}>
-              Note 1
-            </TextInput>
+            <View
+              style={styles.sectionHeader}>
+              <TextInput
+                style={styles.textTitle}>
+                Note 1
+              </TextInput>
+              <Icon name="save" size={30} color="black" onPress={this.handleSaveNote} />
+            </View>
             <View
               style={styles.sectionInput}>
               <TextInput
@@ -62,15 +74,19 @@ const styles = StyleSheet.create({
     marginVertical: 24,
     paddingHorizontal: 24,
   },
-  textTitle: {
-    fontSize: 24,
-    lineHeight: 30,
-    fontWeight: '600',
-    color: Colors.black,
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   sectionInput: {
     paddingTop: 8,
     borderTopWidth: 1.5
+  },
+  textTitle: {
+    fontSize: 24,
+    lineHeight: 24,
+    fontWeight: '600',
+    color: Colors.black,
   },
   textInput: {
     textAlignVertical: 'top',
@@ -78,7 +94,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     fontFamily: 'sans-serif',
     color: Colors.dark,
-  }
+  },
 });
 
 export default App;
