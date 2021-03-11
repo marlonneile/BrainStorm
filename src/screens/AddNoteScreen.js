@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Alert,
+  Button,
   Dimensions,
   KeyboardAvoidingView,
   Platform,
@@ -9,12 +10,19 @@ import {
   View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MMKVStorage from 'react-native-mmkv-storage';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+
+const MMKV = new MMKVStorage.Loader().initialize()
 
 const AddNoteScreen = props => {
 
-  const handleSaveNote = () => {
-    Alert.alert("TODO", "Salvar nota")
+  const saveNoteHandler = async () => {
+    await MMKV.setMapAsync("note", { title: "title", text: "text" })
+  }
+
+  const getNote = async () => {
+    await MMKV.getMapAsync("note").then((value) => console.log(value))
   }
 
   return (
@@ -27,18 +35,19 @@ const AddNoteScreen = props => {
         <View
           style={styles.sectionHeader}>
           <TextInput
-            style={styles.textTitle}>
-            Note 1
-          </TextInput>
-          <Icon name="save" size={30} color="black" onPress={handleSaveNote} />
+            placeholder="Title"
+            style={styles.textTitle} />
+          <Icon name="save" size={30} color="black" onPress={saveNoteHandler} />
         </View>
         <View
           style={styles.sectionInput}>
           <TextInput
             style={styles.textInput}
+            placeholder="Write your ideas here"
             scrollEnabled={true}
             numberOfLines={8}
             multiline={true}/>
+            <Button title="GET" onPress={getNote} />
         </View>
       </View>
     </KeyboardAvoidingView>

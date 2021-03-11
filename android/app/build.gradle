@@ -128,6 +128,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    externalNativeBuild  {
+        cmake {
+            version "3.10.2.4988404"
+        } 
+    } 
+
     defaultConfig {
         applicationId "com.brainstorm"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -177,6 +183,10 @@ android {
             }
 
         }
+    }
+
+    packagingOptions {
+        pickFirst '**/*.so'
     }
 }
 
