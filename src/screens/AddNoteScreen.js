@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Alert,
-  Button,
   Dimensions,
   KeyboardAvoidingView,
   Platform,
@@ -15,27 +13,53 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const MMKV = new MMKVStorage.Loader().initialize()
 
-const AddNoteScreen = props => {
+const generateNewId = (allNotes) => {
+  const MAX_ID = 100000
+  
+  const newId = Math.floor(Math.random() * MAX_ID).toString()
+
+  if (newId in allNotes) {
+    return generateNewId()
+  }
+  return newId
+}
+
+const getNoteIds = () => {
+  return MMKV.getArray("note-id")
+}
+
+const AddNoteScreen = ({ id, title, text }) => {
+  const [noteID, setNoteID] = useState(id ?? '')
+  const [noteTitle, setNoteTitle] = useState(title ?? '')
+  const [noteBody, setNoteBody] = useState(text ?? '')
+  const [allNotesId, setAllNotesId] = useState([])
+
+  useEffect(() => {
+    if (noteID === '') {
+      const allNotes = getNoteIds()
+      setAllNotesId(allNotes ?? [])
+      setNoteID(generateNewId(allNotes ?? []))
+    }
+  }, [])
 
   const saveNoteHandler = async () => {
-    await MMKV.setMapAsync("note", { title: "title", text: "text" })
-  }
-
-  const getNote = async () => {
-    await MMKV.getMapAsync("note").then((value) => console.log(value))
+    MMKV.setArrayAsync("note-id", [...allNotesId, noteID])
+    MMKV.setMapAsync(noteID, { title: noteTitle, text: noteBody })
   }
 
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={0}
-      style={styles.scrollView}>
+      style={styles.root}>
       <View
         style={styles.sectionContainer}>
         <View
           style={styles.sectionHeader}>
           <TextInput
             placeholder="Title"
+            value={noteTitle}
+            onChangeText={(text) => setNoteTitle(text)}
             style={styles.textTitle} />
           <Icon name="save" size={30} color="black" onPress={saveNoteHandler} />
         </View>
@@ -44,10 +68,12 @@ const AddNoteScreen = props => {
           <TextInput
             style={styles.textInput}
             placeholder="Write your ideas here"
+            value={noteBody}
+            onChangeText={(text) => setNoteBody(text)}
             scrollEnabled={true}
             numberOfLines={8}
-            multiline={true}/>
-            <Button title="GET" onPress={getNote} />
+            multiline={true}
+          />
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -55,7 +81,7 @@ const AddNoteScreen = props => {
 }
 
 const styles = StyleSheet.create({
-  scrollView: {
+  root: {
     backgroundColor: Colors.lighter,
     height: Dimensions.get("window").height
   },
