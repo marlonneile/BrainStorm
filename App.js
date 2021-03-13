@@ -6,6 +6,7 @@
  * @flow strict-local
  */
 
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import {
   SafeAreaView,
@@ -16,12 +17,12 @@ import AddNoteScreen from './src/screens/AddNoteScreen';
 
 const App: () => React$Node = () => {
   return (
-    <>
+    <NavigationContainer>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <AddNoteScreen />
       </SafeAreaView>
-    </>
+    </NavigationContainer>
   );
 };
 
