@@ -8,43 +8,45 @@ import {
   View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import MMKVStorage from 'react-native-mmkv-storage';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-
-const MMKV = new MMKVStorage.Loader().initialize()
+import MMKV from '../mmkvstorage/store';
 
 const generateNewId = (allNotes) => {
   const MAX_ID = 100000
   
   const newId = Math.floor(Math.random() * MAX_ID).toString()
 
-  if (newId in allNotes) {
+  if (allNotes.includes(newId)) {
     return generateNewId()
   }
   return newId
 }
 
 const getNoteIds = () => {
-  return MMKV.getArray("note-id")
+  return MMKV.getArray('note-id')
 }
 
-const AddNoteScreen = ({ id, title, text }) => {
+const AddNoteScreen = ({ route, navigation }) => {
+  const { id, title, text } = route.params;
   const [noteID, setNoteID] = useState(id ?? '')
   const [noteTitle, setNoteTitle] = useState(title ?? '')
   const [noteBody, setNoteBody] = useState(text ?? '')
   const [allNotesId, setAllNotesId] = useState([])
 
   useEffect(() => {
+    const allNotes = getNoteIds()
+    setAllNotesId(allNotes ?? [])
     if (noteID === '') {
-      const allNotes = getNoteIds()
-      setAllNotesId(allNotes ?? [])
       setNoteID(generateNewId(allNotes ?? []))
     }
   }, [])
 
   const saveNoteHandler = async () => {
-    MMKV.setArrayAsync("note-id", [...allNotesId, noteID])
+    if (!allNotesId.includes(noteID)) {
+      MMKV.setArrayAsync('note-id', [...allNotesId, noteID])
+    }
     MMKV.setMapAsync(noteID, { title: noteTitle, text: noteBody })
+    navigation.goBack()
   }
 
   return (
