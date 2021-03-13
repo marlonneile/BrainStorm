@@ -6,22 +6,27 @@
  * @flow strict-local
  */
 
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   StatusBar,
 } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import AddNoteScreen from './src/screens/AddNoteScreen';
+import Home from './src/screens/Home';
+
+const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
   return (
     <NavigationContainer>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <AddNoteScreen />
-      </SafeAreaView>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Note" component={AddNoteScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
