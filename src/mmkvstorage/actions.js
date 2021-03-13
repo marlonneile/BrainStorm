@@ -2,7 +2,7 @@ import MMKV from "./store"
 
 const getAllNotes = () => {
   const allNotesId = getAllNotesId()
-  return allNotesId.map((id) => ({
+  return allNotesId?.map((id) => ({
     id,
     ...MMKV.getMap(id)
   }))
@@ -12,4 +12,8 @@ const getAllNotesId = () => {
   return MMKV.getArray('note-id')
 }
 
-export { getAllNotes, getAllNotesId };
+const deleteAll = () => {
+  return MMKV.clearStore()
+}
+
+export { getAllNotes, getAllNotesId, deleteAll };

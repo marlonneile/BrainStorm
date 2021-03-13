@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { getAllNotes } from '../mmkvstorage/actions';
+import { deleteAll, getAllNotes } from '../mmkvstorage/actions';
 
 const Home = ({ navigation }) => {
   const [notes, setNotes] = useState()
@@ -19,6 +19,11 @@ const Home = ({ navigation }) => {
       setNotes(getAllNotes())
     }, [])
   )
+
+  const handleDelete = () => {
+    deleteAll()
+    setNotes([])
+  }
 
   return (
     <View style={styles.root}>
@@ -41,6 +46,7 @@ const Home = ({ navigation }) => {
           id: '', title: '', text: ''
         })}
       />
+      <Button title="ERASE" onPress={handleDelete} />
     </View>
   )
 }
