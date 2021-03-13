@@ -1,11 +1,46 @@
-import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableNativeFeedback,
+  View
+} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+
+import { getAllNotes } from '../mmkvstorage/actions';
 
 const Home = ({ navigation }) => {
+  const [notes, setNotes] = useState()
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setNotes(getAllNotes())
+    }, [])
+  )
+
   return (
     <View style={styles.root}>
-      <Text>Home</Text>
-      <Button title="OPEN NOTE" onPress={() => navigation.navigate('Note')} />
+      <FlatList
+        data={notes}
+        renderItem={({ item }) => (
+          <TouchableNativeFeedback
+            onPress={() => navigation.navigate('Note', {
+              ...item
+            })}
+          >
+            <View>
+              <Text>{item.title}</Text>
+              <Text>{item.text}</Text>
+            </View>
+          </TouchableNativeFeedback>
+        )}
+      />
+      <Button title="NEW NOTE" onPress={() => navigation.navigate('Note', {
+          id: '', title: '', text: ''
+        })}
+      />
     </View>
   )
 }
