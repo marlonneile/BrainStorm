@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
   StyleSheet,
   StatusBar,
@@ -19,10 +19,10 @@ import Home from './src/screens/Home';
 
 const Stack = createStackNavigator();
 
-const App: () => React$Node = () => {
+const App: () => ReactNode = () => {
   return (
     <NavigationContainer>
-      <StatusBar barStyle="auto" />
+      <StatusBar barStyle="default"/>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Note" component={AddNoteScreen} />
