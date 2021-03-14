@@ -7,12 +7,14 @@ import {
   TouchableNativeFeedback,
   View
 } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useTheme } from '@react-navigation/native';
 
 import { deleteAll, getAllNotes } from '../mmkvstorage/actions';
+import StyledText from '../components/StyledText';
 
 const Home = ({ navigation }) => {
   const [notes, setNotes] = useState()
+  const { colors } = useTheme()
 
   useFocusEffect(
     React.useCallback(() => {
@@ -29,7 +31,7 @@ const Home = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.root}>
+    <View style={{...styles.root, backgroundColor: colors.backgroundColor }}>
       <FlatList
         data={notes}
         renderItem={({ item }) => (
@@ -39,8 +41,8 @@ const Home = ({ navigation }) => {
             })}
           >
             <View>
-              <Text>{item.title}</Text>
-              <Text>{item.text}</Text>
+              <StyledText>{item.title}</StyledText>
+              <StyledText>{item.text}</StyledText>
             </View>
           </TouchableNativeFeedback>
         )}

@@ -1,14 +1,14 @@
+import { useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
-  TextInput,
   View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import StyledTextInput from '../components/StyledTextInput';
 import { getAllNotesId } from '../mmkvstorage/actions';
 import MMKV from '../mmkvstorage/store';
 
@@ -29,6 +29,7 @@ const AddNoteScreen = ({ route, navigation }) => {
   const [noteTitle, setNoteTitle] = useState(title ?? '')
   const [noteBody, setNoteBody] = useState(text ?? '')
   const [allNotesId, setAllNotesId] = useState([])
+  const { colors } = useTheme()
 
   useEffect(() => {
     const allNotes = getAllNotesId()
@@ -56,16 +57,16 @@ const AddNoteScreen = ({ route, navigation }) => {
         style={styles.sectionContainer}>
         <View
           style={styles.sectionHeader}>
-          <TextInput
+          <StyledTextInput
             placeholder="Title"
             value={noteTitle}
             onChangeText={(text) => setNoteTitle(text)}
             style={styles.titleInput} />
-          <Icon name="save" size={30} color="black" onPress={saveNoteHandler} />
+          <Icon name="save" size={30} color={colors.primary} onPress={saveNoteHandler} />
         </View>
         <View
-          style={styles.sectionInput}>
-          <TextInput
+          style={[styles.sectionInput, {borderTopColor: colors.primary}]}>
+          <StyledTextInput
             style={styles.textInput}
             placeholder="Write your ideas here"
             value={noteBody}
@@ -82,7 +83,7 @@ const AddNoteScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: Colors.lighter,
+    // backgroundColor: Colors.lighter,
     height: Dimensions.get("window").height
   },
   sectionContainer: {
@@ -92,6 +93,7 @@ const styles = StyleSheet.create({
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   sectionInput: {
     paddingTop: 8,
@@ -101,14 +103,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 24,
     fontWeight: '600',
-    color: Colors.black,
   },
   textInput: {
     textAlignVertical: 'top',
     fontSize: 18,
     fontWeight: '400',
     fontFamily: 'sans-serif',
-    color: Colors.dark,
   },
 })
 
