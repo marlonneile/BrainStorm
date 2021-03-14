@@ -16,13 +16,16 @@ const Home = ({ navigation }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      setNotes(getAllNotes())
+      updateLayout()
     }, [])
   )
 
+  const updateLayout = () => {
+    setNotes(getAllNotes())
+  }
+
   const handleDelete = () => {
-    deleteAll()
-    setNotes([])
+    deleteAll().then(() => updateLayout())
   }
 
   return (

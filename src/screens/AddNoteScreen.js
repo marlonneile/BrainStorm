@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { getAllNotesId } from '../mmkvstorage/actions';
 import MMKV from '../mmkvstorage/store';
 
 const generateNewId = (allNotes) => {
@@ -22,10 +23,6 @@ const generateNewId = (allNotes) => {
   return newId
 }
 
-const getNoteIds = () => {
-  return MMKV.getArray('note-id')
-}
-
 const AddNoteScreen = ({ route, navigation }) => {
   const { id, title, text } = route.params;
   const [noteID, setNoteID] = useState(id ?? '')
@@ -34,10 +31,11 @@ const AddNoteScreen = ({ route, navigation }) => {
   const [allNotesId, setAllNotesId] = useState([])
 
   useEffect(() => {
-    const allNotes = getNoteIds()
-    setAllNotesId(allNotes ?? [])
+    const allNotes = getAllNotesId()
+    
+    setAllNotesId(allNotes)
     if (noteID === '') {
-      setNoteID(generateNewId(allNotes ?? []))
+      setNoteID(generateNewId(allNotes))
     }
   }, [])
 
@@ -62,7 +60,7 @@ const AddNoteScreen = ({ route, navigation }) => {
             placeholder="Title"
             value={noteTitle}
             onChangeText={(text) => setNoteTitle(text)}
-            style={styles.textTitle} />
+            style={styles.titleInput} />
           <Icon name="save" size={30} color="black" onPress={saveNoteHandler} />
         </View>
         <View
@@ -99,7 +97,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     borderTopWidth: 1.5
   },
-  textTitle: {
+  titleInput: {
     fontSize: 24,
     lineHeight: 24,
     fontWeight: '600',
