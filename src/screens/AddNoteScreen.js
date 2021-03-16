@@ -23,6 +23,10 @@ const generateNewId = (allNotes) => {
   return newId
 }
 
+const isEmpty = (str) => {
+  return (str.length === 0 || !str.trim())
+}
+
 const AddNoteScreen = ({ route, navigation }) => {
   const { id, title, text } = route.params;
   const [noteID, setNoteID] = useState(id ?? '')
@@ -41,6 +45,11 @@ const AddNoteScreen = ({ route, navigation }) => {
   }, [])
 
   const saveNoteHandler = async () => {
+    if (isEmpty(noteTitle) && isEmpty(noteBody)) {
+      navigation.goBack()
+      return
+    }
+
     if (!allNotesId.includes(noteID)) {
       MMKV.setArrayAsync('note-id', [...allNotesId, noteID])
     }
