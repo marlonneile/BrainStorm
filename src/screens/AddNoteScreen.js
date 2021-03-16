@@ -92,7 +92,6 @@ const AddNoteScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   root: {
-    // backgroundColor: Colors.lighter,
     height: Dimensions.get("window").height
   },
   sectionContainer: {
@@ -112,6 +111,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 24,
     fontWeight: '600',
+    flex: 1,
+    marginEnd: 10,
   },
   textInput: {
     textAlignVertical: 'top',
