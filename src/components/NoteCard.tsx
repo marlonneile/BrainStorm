@@ -12,12 +12,10 @@ interface NoteCardProps {
 const NoteCard: React.FC<NoteCardProps> = ({ title, body, onPress }) => {
   const [shortBody, setShortBody] = useState('')
   useEffect(() => {
-    setShortBody(body.replace(/(.{50})..+/, "$1..."))
+    setShortBody(body.replace(/(.{100})..+/, "$1..."))
   }, [body])
 
   const { colors } = useTheme()
-
-  console.log(colors)
 
   return (
     <TouchableNativeFeedback
