@@ -56,7 +56,7 @@ const Home = ({ navigation }) => {
       </View>
       <View style={styles.button}>
         <Button
-          title="ERASE"
+          title="ERASE ALL"
           color={colors.primary}
           onPress={handleDelete}
         />
