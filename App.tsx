@@ -6,14 +6,13 @@
  * @flow strict-local
  */
 
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import {
   StyleSheet,
   StatusBar,
   useColorScheme,
-  Appearance,
 } from 'react-native';
-import { DarkTheme, DefaultTheme, NavigationContainer, useTheme } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import AddNoteScreen from './src/screens/AddNoteScreen';
@@ -21,12 +20,22 @@ import Home from './src/screens/Home';
 
 const Stack = createStackNavigator();
 
+const NoteDarkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    background: '#232931',
+    card: '#393e46',
+    primary: '#12b584'
+  }
+}
+
 const App: () => ReactNode = () => {
   const scheme = useColorScheme()
-  const colors = scheme === 'dark' ? DarkTheme.colors : DefaultTheme.colors
+  const colors = scheme === 'dark' ? NoteDarkTheme.colors : DefaultTheme.colors
 
   return (
-    <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationContainer theme={scheme === 'dark' ? NoteDarkTheme : DefaultTheme}>
       <StatusBar
         barStyle={scheme === 'dark' ? "light-content" : "dark-content"}
         backgroundColor={colors.background}
