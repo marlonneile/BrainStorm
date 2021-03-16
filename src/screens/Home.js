@@ -45,11 +45,22 @@ const Home = ({ navigation }) => {
             />
         )}
       />
-      <Button title="NEW NOTE" onPress={() => navigation.navigate('Note', {
-          id: '', title: '', text: ''
-        })}
-      />
-      <Button title="ERASE" onPress={handleDelete} />
+      <View style={styles.button}>
+        <Button
+          title="NEW NOTE"
+          color={colors.primary}
+          onPress={() => navigation.navigate('Note', {
+            id: '', title: '', text: ''
+          })}
+        />
+      </View>
+      <View style={styles.button}>
+        <Button
+          title="ERASE"
+          color={colors.primary}
+          onPress={handleDelete}
+        />
+      </View>
     </View>
   )
 }
@@ -59,7 +70,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     marginTop: 10,
-  }
+  },
+  button: {
+    width: 200,
+    marginVertical: 5,
+  },
 })
 
 export default Home;
