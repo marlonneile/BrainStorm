@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   FlatList,
   StyleSheet,
-  Text,
-  TouchableNativeFeedback,
   View
 } from 'react-native';
 import { useFocusEffect, useTheme } from '@react-navigation/native';
 
 import { deleteAll, getAllNotes } from '../mmkvstorage/actions';
-import StyledText from '../components/StyledText';
+import { HomeScreenNavigationProp } from '../routes/types';
 import NoteCard from '../components/NoteCard';
 
-const Home = ({ navigation }) => {
+type HomeProps = {
+  navigation: HomeScreenNavigationProp
+}
+
+const Home = ({ navigation }: HomeProps) => {
   const [notes, setNotes] = useState()
   const { colors } = useTheme()
 
@@ -32,7 +34,7 @@ const Home = ({ navigation }) => {
   }
 
   return (
-    <View style={{...styles.root, backgroundColor: colors.backgroundColor }}>
+    <View style={{...styles.root, backgroundColor: colors.background }}>
       <FlatList
         data={notes}
         renderItem={({ item }) => (
