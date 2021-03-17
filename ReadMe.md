@@ -18,6 +18,6 @@ Notebook app made using React Native inspired by [Roam Research](https://roamres
 
 ## Showcase
 
-<img src="previews/add_note_light.jpg" alt="Add note dark mode" width="200" /> <img src="previews/home_light.jpg" alt="" width="200" hspace="30" />
+<img src="previews/add_note_light.jpg" alt="Add note dark mode" width="200" hspace="20" /> <img src="previews/home_light.jpg" alt="" width="200" hspace="20" />
 
-<img src="previews/add_note_dark.jpg" alt="Add note light mode" width="200" /> <img src="previews/home_dark.jpg" alt="" width="200" hspace="30" />
+<img src="previews/add_note_dark.jpg" alt="Add note light mode" width="200" hspace="20" /> <img src="previews/home_dark.jpg" alt="" width="200" hspace="30" />
