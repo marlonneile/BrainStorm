@@ -12,7 +12,7 @@ import { HomeScreenNavigationProp } from '../routes/types';
 import NoteCard from '../components/NoteCard';
 import { NoteProps } from '../mmkvstorage/types';
 
-type HomeProps = {
+interface HomeProps {
   navigation: HomeScreenNavigationProp
 }
 

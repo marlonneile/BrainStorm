@@ -1,3 +1,4 @@
+import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack"
 
 type RootStackParamList = {
@@ -14,4 +15,19 @@ type HomeScreenNavigationProp = StackNavigationProp<
   'Home'
 >;
 
-export type { RootStackParamList, HomeScreenNavigationProp }
+type AddNoteScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Note'
+>;
+
+type AddNoteScreenRouteProp = RouteProp<
+  RootStackParamList,
+  'Note'
+>;
+
+export type {
+  RootStackParamList,
+  HomeScreenNavigationProp,
+  AddNoteScreenNavigationProp,
+  AddNoteScreenRouteProp,
+}

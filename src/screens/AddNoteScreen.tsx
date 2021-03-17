@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import StyledTextInput from '../components/StyledTextInput';
 import { getAllNotesId } from '../mmkvstorage/actions';
 import MMKV from '../mmkvstorage/store';
+import { AddNoteScreenNavigationProp, AddNoteScreenRouteProp } from '../routes/types';
 
 const generateNewId = (allNotes) => {
   const MAX_ID = 100000
@@ -27,7 +28,12 @@ const isEmpty = (str) => {
   return (str.length === 0 || !str.trim())
 }
 
-const AddNoteScreen = ({ route, navigation }) => {
+interface AddNoteScreenProps {
+  route: AddNoteScreenRouteProp
+  navigation: AddNoteScreenNavigationProp
+}
+
+const AddNoteScreen = ({ route, navigation }: AddNoteScreenProps) => {
   const { id, title, text } = route.params;
   const [noteID, setNoteID] = useState(id ?? '')
   const [noteTitle, setNoteTitle] = useState(title ?? '')
