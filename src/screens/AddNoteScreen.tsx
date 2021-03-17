@@ -13,18 +13,18 @@ import { getAllNotesId } from '../mmkvstorage/actions';
 import MMKV from '../mmkvstorage/store';
 import { AddNoteScreenNavigationProp, AddNoteScreenRouteProp } from '../routes/types';
 
-const generateNewId = (allNotes) => {
+const generateNewId = (allNotes: string[]): string => {
   const MAX_ID = 100000
   
   const newId = Math.floor(Math.random() * MAX_ID).toString()
 
   if (allNotes.includes(newId)) {
-    return generateNewId()
+    return generateNewId(allNotes)
   }
   return newId
 }
 
-const isEmpty = (str) => {
+const isEmpty = (str: string) => {
   return (str.length === 0 || !str.trim())
 }
 
@@ -38,7 +38,7 @@ const AddNoteScreen = ({ route, navigation }: AddNoteScreenProps) => {
   const [noteID, setNoteID] = useState(id ?? '')
   const [noteTitle, setNoteTitle] = useState(title ?? '')
   const [noteBody, setNoteBody] = useState(text ?? '')
-  const [allNotesId, setAllNotesId] = useState([])
+  const [allNotesId, setAllNotesId] = useState<string[]>([])
   const { colors } = useTheme()
 
   useEffect(() => {
