@@ -1,15 +1,16 @@
 import MMKV from "./store"
+import { NoteProps } from "./types"
 
-const getAllNotes = () => {
+const getAllNotes: () => NoteProps[] = () => {
   const allNotesId = getAllNotesId()
 
   return allNotesId.map((id) => ({
     id,
     ...MMKV.getMap(id)
-  }))
+  })) as NoteProps[]
 }
 
-const getAllNotesId = () => {
+const getAllNotesId: () => string[] = () => {
   return MMKV.getArray('note-id') ?? []
 }
 

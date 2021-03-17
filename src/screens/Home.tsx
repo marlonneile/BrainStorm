@@ -10,13 +10,14 @@ import { useFocusEffect, useTheme } from '@react-navigation/native';
 import { deleteAll, getAllNotes } from '../mmkvstorage/actions';
 import { HomeScreenNavigationProp } from '../routes/types';
 import NoteCard from '../components/NoteCard';
+import { NoteProps } from '../mmkvstorage/types';
 
 type HomeProps = {
   navigation: HomeScreenNavigationProp
 }
 
 const Home = ({ navigation }: HomeProps) => {
-  const [notes, setNotes] = useState()
+  const [notes, setNotes] = useState<NoteProps[]>()
   const { colors } = useTheme()
 
   useFocusEffect(
